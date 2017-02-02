@@ -1,0 +1,12 @@
+<h2>Welcome!</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group main-menu">
+                <li *ngFor="let item of menuItems" class="list-group-item">
+                    <a [routerLink]="[item.url]">{{ item.text }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

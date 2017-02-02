@@ -1,0 +1,14 @@
+<div *ngIf="list">
+    <h2>{{ list.name }}</h2>
+
+    <ul class="list-group">
+        <li
+            *ngFor="let item of getListItems()"
+            (click)="toggleIsDone(item)"
+            class="list-group-item pointer hover">
+            <div [class.done]="item.isDone">
+                {{ item.name }}
+            </div>
+        </li>
+    </ul>
+</div>
