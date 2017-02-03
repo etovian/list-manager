@@ -19,10 +19,18 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     list: List;
     listItems: ListItem[];
     listSubscription: Subscription;
+    newListName: string;
+    newListItemName: string;
     observableList: FirebaseObjectObservable<List>;
 
-    @ViewChild(ModalComponent)
-    public readonly modal: ModalComponent;
+    @ViewChild('confirmModal')
+    public readonly confirmModal: ModalComponent;
+
+    @ViewChild('editModal')
+    public readonly editModal: ModalComponent;
+
+    @ViewChild('addModal')
+    public readonly addModal: ModalComponent;
 
     constructor(
         private route: ActivatedRoute,
@@ -46,11 +54,25 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     confirmDelete(): void {
-        this.modal.show();
+        this.confirmModal.show();
     }
 
     cancel(): void {
-        this.modal.hide();
+        this.confirmModal.hide();
+    }
+
+    cancelAdd(): void {
+        this.addModal.hide();
+    }
+
+    cancelEdit(): void {
+        this.editModal.hide();
+    }
+
+    changeListName(): void {
+        this.list.name = this.newListName;
+        this.editModal.hide();
+        this.save();
     }
 
     removeCompletedItems(): void {
@@ -58,15 +80,33 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     delete(): void {
-        this.modal.hide();
+        this.confirmModal.hide();
     }
 
     getListItems(list: List): ListItem[] {
         return this.listService.getListItems(list);
     }
 
+    openAddModal(): void {
+        this.newListItemName = 'New List Item';
+        this.addModal.show();
+    }
+
+    openEditModal(): void {
+        this.newListName = this.list.name;
+        this.editModal.show();
+    }
+
+    save(): void {
+        this.listService.update(this.observableList, this.list);
+    }
+
+    saveNewListItem(): void {
+        this.listService.addListItem(this.list, this.newListItemName).then(() => this.addModal.hide());
+    }
+
     toggleIsDone(item): void {
         item.isDone = !item.isDone;
-        this.listService.update(this.observableList, this.list);
+        this.save();
     }
 }

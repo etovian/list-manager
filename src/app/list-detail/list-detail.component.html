@@ -1,6 +1,8 @@
 <div *ngIf="list">
     <h2>{{ ( observableList | async )?.name }}</h2>
-    <button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete</button>
+    <button (click)="openAddModal()" class="btn btn-default btn-lg">Add Item</button>
+    <button (click)="openEditModal()" class="btn btn-default btn-lg">Edit List</button>
+    <button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete List</button>
     <button (click)="removeCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
     <br><br>
     <ul *ngIf="listItems" class="list-group">
@@ -15,7 +17,7 @@
         </li>
     </ul>
 
-    <app-modal>
+    <app-modal #confirmModal>
         <div class="app-modal-header">
             <h3>Confirm Delete</h3>
         </div>
@@ -26,6 +28,46 @@
             <div class="btn-group">
                 <button (click)="cancel()" class="btn btn-primary">Cancel</button>
                 <button (click)="delete()" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </app-modal>
+
+    <app-modal #editModal>
+        <div class="app-modal-header">
+            <h3>Edit List</h3>
+        </div>
+        <div class="app-modal-body">
+            <form name="editForm">
+                <div class="form-group">
+                    <label>List Name</label>
+                    <input [(ngModel)]="newListName" type="text" class="form-control" name="name" placeholder="add list name" required="required">
+                </div>
+            </form>
+        </div>
+        <div class="app-modal-footer">
+            <div class="btn-group">
+                <button (click)="cancelEdit()" class="btn btn-default">Cancel</button>
+                <button (click)="changeListName()" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </app-modal>
+
+    <app-modal #addModal>
+        <div class="app-modal-header">
+            <h3>Add Item</h3>
+        </div>
+        <div class="app-modal-body">
+            <form name="editForm">
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input [(ngModel)]="newListItemName" type="text" class="form-control" name="itemName" placeholder="add item name" required="required">
+                </div>
+            </form>
+        </div>
+        <div class="app-modal-footer">
+            <div class="btn-group">
+                <button (click)="cancelAdd()" class="btn btn-default">Cancel</button>
+                <button (click)="saveNewListItem()" class="btn btn-primary">Save</button>
             </div>
         </div>
     </app-modal>

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { List } from '../classes/list';
 import { ListItem } from '../classes/list-item';
-import Promise = firebase.Promise;
-// import * as _ from '@types/underscore';
 
 @Injectable()
 export class ListService {
@@ -11,6 +9,14 @@ export class ListService {
     private url = '/lists';
 
     constructor(private af: AngularFire) { }
+
+    addListItem(list: List, listItemName: string): Promise<any> {
+        let url = `${this.url}/${list.$key}/items`;
+        return Promise.resolve(this.af.database.list(url).push({
+            name: listItemName,
+            isDone: false
+        }));
+    }
 
     getAll(): FirebaseListObservable<List[]> {
         return this.af.database.list(this.url);
@@ -45,9 +51,9 @@ export class ListService {
     }
 
     update(observable: FirebaseObjectObservable<any>, list: List): Promise<any> {
-        return observable.update({
+        return Promise.resolve(observable.update({
             name: list.name,
             items: list.items
-        });
+        }));
     }
 }
