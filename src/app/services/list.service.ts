@@ -10,12 +10,18 @@ export class ListService {
 
     constructor(private af: AngularFire) { }
 
+    addList(observable: FirebaseListObservable<List[]>): string {
+        return observable.push({
+            name: 'New List'
+        }).key;
+    }
+
     addListItem(list: List, listItemName: string): Promise<any> {
         let url = `${this.url}/${list.$key}/items`;
         return Promise.resolve(this.af.database.list(url).push({
             name: listItemName,
             isDone: false
-        }));
+        }).then(newList => { return newList; }));
     }
 
     getAll(): FirebaseListObservable<List[]> {
@@ -53,7 +59,7 @@ export class ListService {
     update(observable: FirebaseObjectObservable<any>, list: List): Promise<any> {
         return Promise.resolve(observable.update({
             name: list.name,
-            items: list.items
+            items: list.items || []
         }));
     }
 }

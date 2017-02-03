@@ -25,6 +25,11 @@ export class ListsComponent implements OnInit {
         this.lists = this.route.snapshot.data['lists'];
     }
 
+    addList(): void {
+        let newId = this.listService.addList(this.lists);
+        this.router.navigate(['/list', newId]);
+    }
+
     goToDetail(list: List): void {
         this.router.navigate(['/list', list.$key])
     }
