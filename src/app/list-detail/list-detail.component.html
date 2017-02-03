@@ -1,6 +1,8 @@
 <div *ngIf="list">
     <h2>{{ list.name }}</h2>
-
+    <button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete</button>
+    <button (click)="clearCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
+    <br><br>
     <ul class="list-group">
         <li
             *ngFor="let item of getListItems()"
@@ -11,4 +13,21 @@
             </div>
         </li>
     </ul>
+
+    <app-modal>
+        <div class="app-modal-header">
+            <h3>Confirm Delete</h3>
+        </div>
+        <div class="app-modal-body">
+            Are you sure you want to delete {{ list.name }}?
+        </div>
+        <div class="app-modal-footer">
+            <div class="btn-group">
+                <button (click)="cancel()" class="btn btn-primary">Cancel</button>
+                <button (click)="delete()" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </app-modal>
+
 </div>
+

@@ -20,22 +20,35 @@ export class ListService {
         return this.af.database.object(`/lists/${id}`, { preserveSnapshot: true });
     }
 
+    getListItemKey(list: List, matchListItem: ListItem) {
+        let listItemKey: string;
+        for(let key in list.items) {
+            let listItem = list.items[key];
+            if(listItem === matchListItem) {
+                listItemKey = key;
+            }
+        }
+        return listItemKey;
+    }
+
     getListItems(list: List): ListItem[] {
         let listItems: ListItem[] = [];
         for(let key in list.items) {
             let listItem: ListItem = list.items[key];
+            listItem.id = key;
             listItems.push(listItem);
         }
 
-        // let sortedListItems = _(listItems).chain()
-        //     .sortBy(listItem => { return listItem.isDone; })
-        //     .sortBy(listItem => { return listItem.name; })
-        //     .value();
-        //
-        // return sortedListItems;
+        let sortedItems = listItems.sort((list1, list2) => {
+            return (list1.name > list2.name) ? 1 : -1;
+        });
 
-        return listItems;
+        return sortedItems;
     }
+
+    // removeItem(listKey: string, listItem: ListItem): void {
+    //
+    // }
 
     update(observable: FirebaseObjectObservable<any>, list: List): Promise<any> {
         console.log(observable);
