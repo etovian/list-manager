@@ -1,14 +1,15 @@
 <div *ngIf="list">
-    <h2>{{ list.name }}</h2>
+    <h2>{{ ( observableList | async )?.name }}</h2>
     <button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete</button>
-    <button (click)="clearCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
+    <button (click)="removeCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
     <br><br>
-    <ul class="list-group">
+    <ul *ngIf="listItems" class="list-group">
         <li
-            *ngFor="let item of getListItems()"
+            *ngFor="let item of listItems"
             (click)="toggleIsDone(item)"
-            class="list-group-item pointer hover">
-            <div [class.done]="item.isDone">
+            class="list-group-item pointer hover"
+            [class.done]="item.isDone">
+            <div>
                 {{ item.name }}
             </div>
         </li>

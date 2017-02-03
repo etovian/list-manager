@@ -16,26 +16,14 @@ export class ListService {
         return this.af.database.list(this.url);
     }
 
-    get(id: string): FirebaseObjectObservable<List[]> {
-        return this.af.database.object(`/lists/${id}`, { preserveSnapshot: true });
-    }
-
-    getListItemKey(list: List, matchListItem: ListItem) {
-        let listItemKey: string;
-        for(let key in list.items) {
-            let listItem = list.items[key];
-            if(listItem === matchListItem) {
-                listItemKey = key;
-            }
-        }
-        return listItemKey;
+    get(id: string): FirebaseObjectObservable<List> {
+        return this.af.database.object(`/lists/${id}`);
     }
 
     getListItems(list: List): ListItem[] {
         let listItems: ListItem[] = [];
         for(let key in list.items) {
             let listItem: ListItem = list.items[key];
-            listItem.id = key;
             listItems.push(listItem);
         }
 
@@ -46,12 +34,20 @@ export class ListService {
         return sortedItems;
     }
 
-    // removeItem(listKey: string, listItem: ListItem): void {
-    //
-    // }
+    removeCompletedListItems(list: List): void {
+        for(let itemKey in list.items) {
+            let listItem: ListItem = list.items[itemKey];
+            if(listItem.isDone) {
+                let url = `/lists/${list.$key}/items/${itemKey}`;
+                this.af.database.object(url).remove();
+            }
+        }
+    }
 
     update(observable: FirebaseObjectObservable<any>, list: List): Promise<any> {
-        console.log(observable);
-        return observable.update(list);
+        return observable.update({
+            name: list.name,
+            items: list.items
+        });
     }
 }

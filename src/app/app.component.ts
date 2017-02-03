@@ -25,7 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        console.log('app component init fired');
         this.subscribeToAuth();
     }
 
@@ -40,11 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     subscribeToAuth(): void {
-        console.log('subscribe to auth fired');
         this.authorizationSubscription = this.af.auth.subscribe(auth => {
-            console.log('subscribe to auth callback fired');
             if(auth) {
-                console.log('auth.uid is truthy');
                 this.authorizedUserService.get(auth.uid).subscribe(snapshot => {
                     this.currentUser = snapshot.val();
                 });
