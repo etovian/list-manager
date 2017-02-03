@@ -8,6 +8,7 @@ import {ListItem} from "../classes/list-item";
 import {FirebaseObjectObservable} from "angularfire2";
 import {ModalComponent} from "../modal/modal.component";
 import {Subscription} from "rxjs";
+import {EventEmitter} from "@angular/common/src/facade/async";
 
 @Component({
     selector: 'app-list-detail',
@@ -22,15 +23,21 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     newListName: string;
     newListItemName: string;
     observableList: FirebaseObjectObservable<List>;
+    private readonly AUTO_FOCUS_DELAY = 500;
 
+    //view children
     @ViewChild('confirmModal')
     public readonly confirmModal: ModalComponent;
+
+    @ViewChild('addModal')
+    public readonly addModal: ModalComponent;
 
     @ViewChild('editModal')
     public readonly editModal: ModalComponent;
 
-    @ViewChild('addModal')
-    public readonly addModal: ModalComponent;
+    //modal focus events
+    public addModalFocusTriggeringEventEmitter = new EventEmitter<boolean>();
+    public editModalFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
     constructor(
         private route: ActivatedRoute,
@@ -50,7 +57,7 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         this.listSubscription = this.observableList.subscribe(list => {
             this.list = list;
             this.listItems = this.getListItems(list);
-        })
+        });
     }
 
     confirmDelete(): void {
@@ -90,11 +97,18 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     openAddModal(): void {
         this.newListItemName = 'New List Item';
         this.addModal.show();
+        setTimeout(() => {
+            this.addModalFocusTriggeringEventEmitter.emit(true);
+        }, this.AUTO_FOCUS_DELAY);
+
     }
 
     openEditModal(): void {
         this.newListName = this.list.name;
         this.editModal.show();
+        setTimeout(() => {
+            this.editModalFocusTriggeringEventEmitter.emit(true)
+        }, this.AUTO_FOCUS_DELAY);
     }
 
     save(): void {

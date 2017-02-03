@@ -18,6 +18,7 @@ import { ListDetailComponent } from './list-detail/list-detail.component';
 import { LoginComponent } from './login/login.component';
 import {ListsResolverService} from "./resolvers/lists-resolver.service";
 import { ModalComponent } from './modal/modal.component';
+import { FocusDirective } from './directives/focus.directive';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCpLSW1tR2ZfOOxXCM1Lj5fp0HBsm6Bqos",
@@ -40,7 +41,8 @@ export const firebaseAuthConfig = {
         RegularItemsComponent,
         ListDetailComponent,
         LoginComponent,
-        ModalComponent
+        ModalComponent,
+        FocusDirective
     ],
     imports: [
         BrowserModule,
