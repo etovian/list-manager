@@ -15,7 +15,6 @@ export class FocusDirective implements OnInit {
         this.focusEvent.subscribe(event => {
             this.renderer.invokeElementMethod(this.element.nativeElement, 'focus', []);
             this.renderer.invokeElementMethod(this.element.nativeElement, 'setSelectionRange', [0, this.element.nativeElement.value.length]);
-            console.log('focus event fired');
         });
     }
 
