@@ -43,6 +43,7 @@
                     <input
                         [(ngModel)]="newListItemName"
                         [focus]="addModalFocusTriggeringEventEmitter"
+                        list="commonItems"
                         type="text"
                         class="form-control"
                         name="itemName"
@@ -85,6 +86,10 @@
             </div>
         </div>
     </app-modal>
+
+    <datalist id="commonItems">
+        <option *ngFor="let item of commonItems" value="{{ item.name }}"></option>
+    </datalist>
 
 </div>
 

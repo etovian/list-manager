@@ -5,10 +5,11 @@ import { ListService} from '../services/list.service';
 
 import { List } from '../classes/list';
 import {ListItem} from "../classes/list-item";
-import {FirebaseObjectObservable} from "angularfire2";
+import {FirebaseObjectObservable, FirebaseListObservable} from "angularfire2";
 import {ModalComponent} from "../modal/modal.component";
 import {Subscription} from "rxjs";
 import {EventEmitter} from "@angular/common/src/facade/async";
+import {CommonItemsService} from "../services/common-items.service";
 
 @Component({
     selector: 'app-list-detail',
@@ -17,6 +18,9 @@ import {EventEmitter} from "@angular/common/src/facade/async";
 })
 export class ListDetailComponent implements OnInit, OnDestroy {
 
+    commonItems = [];
+    commonItemsObservable: FirebaseListObservable<any>;
+    commonItemsSubscription: Subscription;
     list: List;
     listItems: ListItem[];
     listSubscription: Subscription;
@@ -42,10 +46,12 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private listService: ListService,
+        private commonItemsService: CommonItemsService
     ) { }
 
     ngOnDestroy(): void {
         this.listSubscription.unsubscribe();
+        this.commonItemsSubscription.unsubscribe();
     }
 
     ngOnInit() {
@@ -57,6 +63,11 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         this.listSubscription = this.observableList.subscribe(list => {
             this.list = list;
             this.listItems = this.getListItems(list);
+        });
+
+        this.commonItemsObservable = this.commonItemsService.getAll();
+        this.commonItemsSubscription = this.commonItemsObservable.subscribe(commonItems => {
+            this.commonItems = this.commonItemsService.getSortedItems(commonItems);
         });
     }
 
@@ -116,7 +127,8 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     saveNewListItem(): void {
-        this.listService.addListItem(this.list, this.newListItemName).then(() => this.addModal.hide());
+        this.listService.addListItem(this.list, this.newListItemName)
+            .then(() => this.addModalFocusTriggeringEventEmitter.emit(true));
     }
 
     toggleIsDone(item): void {
