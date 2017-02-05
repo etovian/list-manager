@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { ListService} from '../services/list.service';
 
@@ -46,7 +46,8 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private listService: ListService,
-        private commonItemsService: CommonItemsService
+        private commonItemsService: CommonItemsService,
+        private router: Router
     ) { }
 
     ngOnDestroy(): void {
@@ -98,7 +99,10 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     delete(): void {
-        this.confirmModal.hide();
+        this.listService.deleteList(this.observableList).then(() => {
+            this.router.navigate(['/lists']);
+        });
+
     }
 
     getListItems(list: List): ListItem[] {

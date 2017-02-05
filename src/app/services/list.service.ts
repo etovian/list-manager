@@ -24,6 +24,10 @@ export class ListService {
         }).then(newList => { return newList; }));
     }
 
+    deleteList(observableList: FirebaseObjectObservable<List>): Promise<any> {
+        return Promise.resolve(observableList.remove());
+    }
+
     getAll(): FirebaseListObservable<List[]> {
         return this.af.database.list(this.url);
     }
@@ -40,7 +44,12 @@ export class ListService {
         }
 
         let sortedItems = listItems.sort((list1, list2) => {
-            return (list1.name > list2.name) ? 1 : -1;
+            if(list1.isDone == list2.isDone) {
+                return (list1.name > list2.name) ? 1 : -1;
+            } else {
+                return (list1.isDone > list2.isDone) ? 1 : -1;
+            }
+
         });
 
         return sortedItems;
