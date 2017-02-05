@@ -15,7 +15,7 @@
             </div>
             <br><br>
             <ul *ngIf="items" class="list-group">
-                <li *ngFor="let item of items" class="list-group-item hover">
+                <li *ngFor="let item of items" class="list-group-item hover big-text">
                     <div>
                         {{ item.name }}
                         <button (click)="remove(item)" class="btn btn-default btn-lg pull-right">

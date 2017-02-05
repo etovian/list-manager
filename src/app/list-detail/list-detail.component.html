@@ -9,7 +9,7 @@
         <li
             *ngFor="let item of listItems"
             (click)="toggleIsDone(item)"
-            class="list-group-item pointer hover"
+            class="list-group-item pointer hover big-text"
             [class.done]="item.isDone">
             <div>
                 {{ item.name }}

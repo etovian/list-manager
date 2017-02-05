@@ -6,3 +6,7 @@
 .pointer {
     cursor: pointer;
 }
+
+.big-text {
+    font-size: 24pt;
+}
