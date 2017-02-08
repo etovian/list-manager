@@ -10,6 +10,7 @@ import { ListService } from './services/list.service';
 import { LoginService } from "./services/login.service";
 import { AuthorizedUserService } from "./services/authorized-user.service";
 import { CommonItemsService } from './services/common-items.service';
+import { UnderscoreService } from './services/underscore.service';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -58,7 +59,8 @@ export const firebaseAuthConfig = {
         LoginService,
         AuthorizedUserService,
         ListsResolverService,
-        CommonItemsService
+        CommonItemsService,
+        UnderscoreService
     ],
     bootstrap: [AppComponent]
 })

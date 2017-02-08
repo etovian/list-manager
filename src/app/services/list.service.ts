@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { List } from '../classes/list';
 import { ListItem } from '../classes/list-item';
+import {UnderscoreService} from "./underscore.service";
 
 @Injectable()
 export class ListService {
 
     private url = '/lists';
 
-    constructor(private af: AngularFire) { }
+    constructor(private af: AngularFire, private underscoreService: UnderscoreService) { }
 
-    //there is much debate about how to install third-party libraries
-    //TODO: figure out a better way than referencing a global variable
-    _ = window["_"];
+    _ = this.underscoreService.get();
 
     addList(observable: FirebaseListObservable<List[]>): string {
         return observable.push({
