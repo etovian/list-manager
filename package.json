@@ -27,12 +27,14 @@
     "firebase": "^3.6.7",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
+    "underscore": "^1.8.3",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
+    "@types/underscore": "^1.7.36",
     "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.0",

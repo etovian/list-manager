@@ -10,6 +10,10 @@ export class ListService {
 
     constructor(private af: AngularFire) { }
 
+    //there is much debate about how to install third-party libraries
+    //TODO: figure out a better way than referencing a global variable
+    _ = window["_"];
+
     addList(observable: FirebaseListObservable<List[]>): string {
         return observable.push({
             name: 'New List'
@@ -37,22 +41,11 @@ export class ListService {
     }
 
     getListItems(list: List): ListItem[] {
-        let listItems: ListItem[] = [];
-        for(let key in list.items) {
-            let listItem: ListItem = list.items[key];
-            listItems.push(listItem);
-        }
-
-        let sortedItems = listItems.sort((list1, list2) => {
-            if(list1.isDone == list2.isDone) {
-                return (list1.name > list2.name) ? 1 : -1;
-            } else {
-                return (list1.isDone > list2.isDone) ? 1 : -1;
-            }
-
-        });
-
-        return sortedItems;
+        //https://blog.falafel.com/nifty-underscore-tricks-sorting-by-multiple-properties-with-underscore/
+        return this._(list.items).chain()
+            .sortBy('name')
+            .sortBy('isDone')
+            .value();
     }
 
     removeCompletedListItems(list: List): void {
