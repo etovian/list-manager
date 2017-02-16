@@ -10,6 +10,7 @@ import {ModalComponent} from "../modal/modal.component";
 import {Subscription} from "rxjs";
 import {EventEmitter} from "@angular/common/src/facade/async";
 import {CommonItemsService} from "../services/common-items.service";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
     selector: 'app-list-detail',
@@ -47,7 +48,8 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private listService: ListService,
         private commonItemsService: CommonItemsService,
-        private router: Router
+        private router: Router,
+        private notificationService: NotificationService
     ) { }
 
     ngOnDestroy(): void {
@@ -99,8 +101,15 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     delete(): void {
+        let listName = this.list.name;
         this.listService.deleteList(this.observableList).then(() => {
             this.router.navigate(['/lists']);
+            this.notificationService.addNotification({
+                title: 'Deleted',
+                text: `${listName} was deleted.`,
+                type: 'danger',
+                pinned: false
+            });
         });
 
     }
@@ -132,7 +141,15 @@ export class ListDetailComponent implements OnInit, OnDestroy {
 
     saveNewListItem(): void {
         this.listService.addListItem(this.list, this.newListItemName)
-            .then(() => this.addModalFocusTriggeringEventEmitter.emit(true));
+            .then(() => {
+                this.addModalFocusTriggeringEventEmitter.emit(true);
+                this.notificationService.addNotification({
+                    title: 'Item Added',
+                    text: `${this.newListItemName} was added to the list.`,
+                    type: 'success',
+                    pinned: false
+                });
+            });
     }
 
     toggleIsDone(item): void {

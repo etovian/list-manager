@@ -1,0 +1,7 @@
+.notification-panel {
+    right: 10pt;
+    bottom: 10pt;
+    z-index: 9999;
+    position: fixed;
+    width: 288pt;
+}

@@ -1,0 +1,11 @@
+<div class="notification-panel">
+    <div *ngFor="let i of getNotifications()" [ngClass]="getClasses(i)">
+        <h3>{{ i.title }}</h3>
+        <p>{{ i.text }}</p>
+        <div *ngIf="i.lines">
+            <p *ngFor="let j of i.lines">
+                {{ j }}
+            </p>
+        </div>
+    </div>
+</div>

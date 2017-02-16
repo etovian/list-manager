@@ -10,6 +10,7 @@ import { ListService } from './services/list.service';
 import { LoginService } from "./services/login.service";
 import { AuthorizedUserService } from "./services/authorized-user.service";
 import { CommonItemsService } from './services/common-items.service';
+import {NotificationService} from './services/notification.service';
 import { UnderscoreService } from './services/underscore.service';
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import {ListsResolverService} from "./resolvers/lists-resolver.service";
 import { ModalComponent } from './modal/modal.component';
 import { FocusDirective } from './directives/focus.directive';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCpLSW1tR2ZfOOxXCM1Lj5fp0HBsm6Bqos",
@@ -44,7 +46,8 @@ export const firebaseAuthConfig = {
         ListDetailComponent,
         LoginComponent,
         ModalComponent,
-        FocusDirective
+        FocusDirective,
+        NotificationsComponent
     ],
     imports: [
         BrowserModule,
@@ -60,6 +63,7 @@ export const firebaseAuthConfig = {
         AuthorizedUserService,
         ListsResolverService,
         CommonItemsService,
+        NotificationService,
         UnderscoreService
     ],
     bootstrap: [AppComponent]
