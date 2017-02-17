@@ -1,95 +1,166 @@
-<div *ngIf="list">
-    <h2>{{ ( observableList | async )?.name }}</h2>
-    <button (click)="openAddModal()" class="btn btn-default btn-lg">Add Item</button>
-    <button (click)="openEditModal()" class="btn btn-default btn-lg">Edit List</button>
-    <button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete List</button>
-    <button (click)="removeCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
-    <br><br>
-    <ul *ngIf="listItems" class="list-group">
-        <li
-            *ngFor="let item of listItems"
-            (click)="toggleIsDone(item)"
-            class="list-group-item pointer hover big-text"
-            [class.done]="item.isDone">
-            <div>
-                {{ item.name }}
-            </div>
-        </li>
-    </ul>
+<md-sidenav-container *ngIf="list">
+    <md-sidenav #sidenav [mode]="'side'">
+        <md-card>
+            <md-card-header>
+                <h3>Add Item</h3>
+            </md-card-header>
+            <md-card-content>
+                <form>
+                    <md-input-container>
+                        <!--[formControl]="stateCtrl"-->
+                        <input
+                            mdInput
+                            [mdAutocomplete]="auto"
+                            [(ngModel)]="newListItemName"
+                            [focus]="addModalFocusTriggeringEventEmitter"
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            required="required">
+                    </md-input-container>
 
-    <app-modal #confirmModal>
-        <div class="app-modal-header">
-            <h3>Confirm Delete</h3>
-        </div>
-        <div class="app-modal-body">
-            Are you sure you want to delete {{ list.name }}?
-        </div>
-        <div class="app-modal-footer">
-            <div class="btn-group">
-                <button (click)="cancel()" class="btn btn-primary">Cancel</button>
-                <button (click)="delete()" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </app-modal>
+                    <md-autocomplete #auto="mdAutocomplete">
+                        <md-option *ngFor="let state of filteredStates | async" [value]="state">
+                            {{ state }}
+                        </md-option>
+                    </md-autocomplete>
+                </form>
+            </md-card-content>
+            <md-card-actions>
+                <button md-raised-button (click)="saveNewListItem()" class="btn btn-primary">ADD ITEM</button>
+            </md-card-actions>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <h3>Edit List Name</h3>
+            </md-card-header>
+            <md-card-content>
 
-    <app-modal #addModal>
-        <div class="app-modal-header">
-            <h3>Add Item</h3>
-        </div>
-        <div class="app-modal-body">
-            <form name="addForm">
-                <div class="form-group">
-                    <label>Item Name</label>
-                    <input
-                        [(ngModel)]="newListItemName"
-                        [focus]="addModalFocusTriggeringEventEmitter"
-                        list="commonItems"
-                        type="text"
-                        class="form-control"
-                        name="itemName"
-                        placeholder="add item name"
-                        required="required">
-                </div>
-            </form>
-        </div>
-        <div class="app-modal-footer">
-            <div class="btn-group">
-                <button (click)="cancelAdd()" class="btn btn-default">Cancel</button>
-                <button (click)="saveNewListItem()" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </app-modal>
+            </md-card-content>
+            <md-card-actions>
 
-    <app-modal #editModal>
-        <div class="app-modal-header">
-            <h3>Edit List</h3>
-        </div>
-        <div class="app-modal-body">
-            <form name="editForm">
-                <div class="form-group">
-                    <label>List Name</label>
-                    <input
-                        [(ngModel)]="newListName"
-                        [focus]="editModalFocusTriggeringEventEmitter"
-                        type="text"
-                        class="form-control"
-                        name="name"
-                        placeholder="add list name"
-                        required="required">
-                </div>
-            </form>
-        </div>
-        <div class="app-modal-footer">
-            <div class="btn-group">
-                <button (click)="cancelEdit()" class="btn btn-default">Cancel</button>
-                <button (click)="changeListName()" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </app-modal>
+            </md-card-actions>
+        </md-card>
+    </md-sidenav>
 
-    <datalist id="commonItems">
-        <option *ngFor="let item of commonItems" value="{{ item.name }}"></option>
-    </datalist>
+    <div>
+        <md-card>
+            <md-card-header>
+                <h2>{{ ( observableList | async )?.name }}</h2>
+            </md-card-header>
+            <md-card-actions>
+                <button md-icon-button (click)="openSidebar()" class="btn btn-default btn-lg"><md-icon>more_vert</md-icon></button>
+                <button md-raised-button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete List</button>
+                <button md-raised-button (click)="removeCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>
+            </md-card-actions>
+            <md-card-content>
+                <md-list>
+                    <md-list-item
+                            *ngFor="let item of listItems"
+                            (click)="toggleIsDone(item)"
+                            class="list-group-item pointer hover big-text"
+                            [class.done]="item.isDone">
+                        {{ item.name }}
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
 
-</div>
+</md-sidenav-container>
+
+<!--<div *ngIf="list">-->
+    <!--<h2>{{ ( observableList | async )?.name }}</h2>-->
+    <!--<button (click)="openAddModal()" class="btn btn-default btn-lg">Add Item</button>-->
+    <!--<button (click)="openEditModal()" class="btn btn-default btn-lg">Edit List</button>-->
+    <!--<button (click)="confirmDelete()" class="btn btn-danger btn-lg">Delete List</button>-->
+    <!--<button (click)="removeCompletedItems()" class="btn btn-primary btn-lg">Clear Completed Items</button>-->
+    <!--<br><br>-->
+    <!--<ul *ngIf="listItems" class="list-group">-->
+        <!--<li-->
+            <!--*ngFor="let item of listItems"-->
+            <!--(click)="toggleIsDone(item)"-->
+            <!--class="list-group-item pointer hover big-text"-->
+            <!--[class.done]="item.isDone">-->
+            <!--<div>-->
+                <!--{{ item.name }}-->
+            <!--</div>-->
+        <!--</li>-->
+    <!--</ul>-->
+
+    <!--<app-modal #confirmModal>-->
+        <!--<div class="app-modal-header">-->
+            <!--<h3>Confirm Delete</h3>-->
+        <!--</div>-->
+        <!--<div class="app-modal-body">-->
+            <!--Are you sure you want to delete {{ list.name }}?-->
+        <!--</div>-->
+        <!--<div class="app-modal-footer">-->
+            <!--<div class="btn-group">-->
+                <!--<button (click)="cancel()" class="btn btn-primary">Cancel</button>-->
+                <!--<button (click)="delete()" class="btn btn-danger">Delete</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</app-modal>-->
+
+    <!--<app-modal #addModal>-->
+        <!--<div class="app-modal-header">-->
+            <!--<h3>Add Item</h3>-->
+        <!--</div>-->
+        <!--<div class="app-modal-body">-->
+            <!--<form name="addForm">-->
+                <!--<div class="form-group">-->
+                    <!--<label>Item Name</label>-->
+                    <!--<input-->
+                        <!--[(ngModel)]="newListItemName"-->
+                        <!--[focus]="addModalFocusTriggeringEventEmitter"-->
+                        <!--list="commonItems"-->
+                        <!--type="text"-->
+                        <!--class="form-control"-->
+                        <!--name="itemName"-->
+                        <!--placeholder="add item name"-->
+                        <!--required="required">-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<div class="app-modal-footer">-->
+            <!--<div class="btn-group">-->
+                <!--<button (click)="cancelAdd()" class="btn btn-default">Cancel</button>-->
+                <!--<button (click)="saveNewListItem()" class="btn btn-primary">Save</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</app-modal>-->
+
+    <!--<app-modal #editModal>-->
+        <!--<div class="app-modal-header">-->
+            <!--<h3>Edit List</h3>-->
+        <!--</div>-->
+        <!--<div class="app-modal-body">-->
+            <!--<form name="editForm">-->
+                <!--<div class="form-group">-->
+                    <!--<label>List Name</label>-->
+                    <!--<input-->
+                        <!--[(ngModel)]="newListName"-->
+                        <!--[focus]="editModalFocusTriggeringEventEmitter"-->
+                        <!--type="text"-->
+                        <!--class="form-control"-->
+                        <!--name="name"-->
+                        <!--placeholder="add list name"-->
+                        <!--required="required">-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<div class="app-modal-footer">-->
+            <!--<div class="btn-group">-->
+                <!--<button (click)="cancelEdit()" class="btn btn-default">Cancel</button>-->
+                <!--<button (click)="changeListName()" class="btn btn-primary">Save</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</app-modal>-->
+
+    <!--<datalist id="commonItems">-->
+        <!--<option *ngFor="let item of commonItems" value="{{ item.name }}"></option>-->
+    <!--</datalist>-->
+
+<!--</div>-->
 

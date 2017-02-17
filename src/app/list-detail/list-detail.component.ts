@@ -11,6 +11,7 @@ import {Subscription} from "rxjs";
 import {EventEmitter} from "@angular/common/src/facade/async";
 import {CommonItemsService} from "../services/common-items.service";
 import {NotificationService} from "../services/notification.service";
+import {MdSidenav} from "@angular/material";
 
 @Component({
     selector: 'app-list-detail',
@@ -34,15 +35,12 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     @ViewChild('confirmModal')
     public readonly confirmModal: ModalComponent;
 
-    @ViewChild('addModal')
-    public readonly addModal: ModalComponent;
-
-    @ViewChild('editModal')
-    public readonly editModal: ModalComponent;
+    @ViewChild('sidenav')
+    // public readonly addModal: ModalComponent;
+    public readonly sidenav: MdSidenav;
 
     //modal focus events
     public addModalFocusTriggeringEventEmitter = new EventEmitter<boolean>();
-    public editModalFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
     constructor(
         private route: ActivatedRoute,
@@ -83,16 +81,11 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     cancelAdd(): void {
-        this.addModal.hide();
-    }
-
-    cancelEdit(): void {
-        this.editModal.hide();
+        this.sidenav.toggle();
     }
 
     changeListName(): void {
         this.list.name = this.newListName;
-        this.editModal.hide();
         this.save();
     }
 
@@ -118,21 +111,14 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         return this.listService.getListItems(list);
     }
 
-    openAddModal(): void {
+    openSidebar(): void {
         this.newListItemName = 'New List Item';
-        this.addModal.show();
-        setTimeout(() => {
-            this.addModalFocusTriggeringEventEmitter.emit(true);
-        }, this.AUTO_FOCUS_DELAY);
-
-    }
-
-    openEditModal(): void {
-        this.newListName = this.list.name;
-        this.editModal.show();
-        setTimeout(() => {
-            this.editModalFocusTriggeringEventEmitter.emit(true)
-        }, this.AUTO_FOCUS_DELAY);
+        this.sidenav.toggle();
+        if(this.sidenav.opened) {
+            setTimeout(() => {
+                this.addModalFocusTriggeringEventEmitter.emit(true);
+            }, this.AUTO_FOCUS_DELAY);
+        }
     }
 
     save(): void {

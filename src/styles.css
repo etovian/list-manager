@@ -1,3 +1,9 @@
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+body {
+    background-color: #dadfe1;
+}
+
 .hover:HOVER {
     background-color: #3195c3;
     color: white;

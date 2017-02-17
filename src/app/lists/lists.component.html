@@ -1,14 +1,15 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Lists</h3>
-            <button (click)="addList()" class="btn btn-default btn-lg">Add New List</button>
-            <br><br>
-            <ul class="list-group">
-                <li class="list-group-item hover pointer big-text" *ngFor="let list of lists | async">
-                    <div (click)="goToDetail(list)">{{ list.name }}</div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<md-card>
+    <md-card-header>
+        <h2>Lists</h2>
+    </md-card-header>
+    <md-card-actions>
+        <button md-raised-button (click)="addList()" class="btn btn-default btn-lg">Add New List</button>
+    </md-card-actions>
+    <md-card-content>
+        <md-list>
+            <md-list-item (click)="goToDetail(i)" *ngFor="let i of lists | async" class="hover pointer">
+                <h4 md-line>{{i.name}}</h4>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

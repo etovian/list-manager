@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MaterialModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -54,6 +55,7 @@ export const firebaseAuthConfig = {
         FormsModule,
         HttpModule,
         AppRoutingModule,
+        MaterialModule,
         AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
     ],
     providers: [

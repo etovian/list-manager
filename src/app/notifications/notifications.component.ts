@@ -20,7 +20,9 @@ export class NotificationsComponent implements OnInit {
 
     getClasses(notification: Notification): any {
         let classes = {
-            alert: true
+            info: notification.type == 'info',
+            success: notification.type == 'success',
+            danger: notification.type == 'danger',
         };
         classes[`alert-${notification.type}`] = true;
         return classes;

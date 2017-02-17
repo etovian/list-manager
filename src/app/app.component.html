@@ -1,29 +1,10 @@
-<div *ngIf="currentUser">
+<button *ngIf="currentUser" md-button [mdMenuTriggerFor]="menu">
+    {{ currentUser.firstName }}  {{ currentUser.lastName }}
+</button>
+<md-menu #menu="mdMenu">
+    <button (click)="logout()" md-menu-item>Logout</button>
+</md-menu>
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ currentUser.firstName }}  {{ currentUser.lastName }}
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a (click)="logout()">Logout</a></li>
-        </ul>
-
-    </div>
-
-    <a routerLink="/welcome" class="pull-right btn btn-group-lg"><i class="glyphicon glyphicon-home"></i></a>
-</div>
-<h1>
-    {{title}}
-</h1>
-<div class="well">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
-</div>
+<router-outlet></router-outlet>
 
 <notifications></notifications>

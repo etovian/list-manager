@@ -1,11 +1,15 @@
 <div class="notification-panel">
-    <div *ngFor="let i of getNotifications()" [ngClass]="getClasses(i)">
-        <h3>{{ i.title }}</h3>
-        <p>{{ i.text }}</p>
-        <div *ngIf="i.lines">
-            <p *ngFor="let j of i.lines">
-                {{ j }}
+    <md-card *ngFor="let i of getNotifications()" [ngClass]="getClasses(i)">
+        <md-card-header>
+            <md-card-title><span class="title">{{ i.title }}</span></md-card-title>
+        </md-card-header>
+        <md-card-content>
+            <p *ngIf="i.text">
+                {{ i.text }}
             </p>
-        </div>
-    </div>
+        </md-card-content>
+        <md-card-actions>
+            <button md-raised-button>CLOSE</button>
+        </md-card-actions>
+    </md-card>
 </div>

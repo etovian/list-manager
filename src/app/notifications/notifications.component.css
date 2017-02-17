@@ -5,3 +5,22 @@
     position: fixed;
     width: 288pt;
 }
+
+.danger {
+    color: maroon;
+    background-color: #f8ebef;
+}
+
+.info {
+    color: #449edd;
+    background-color: #beecf8;
+}
+
+.success {
+    color: green;
+    background-color: #dff1c9;
+}
+
+.title {
+    font-size: 20pt;
+}
