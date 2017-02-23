@@ -1,0 +1,30 @@
+<md-card>
+    <md-card-header>
+        <h2>{{ title }}</h2>
+    </md-card-header>
+    <md-card-content>
+        {{ message }}
+    </md-card-content>
+</md-card>
+<md-dialog-actions>
+    <button (click)="cancel()" md-raised-button>No</button>
+    <button (click)="affirm()" color="warn" md-raised-button>Yes</button>
+</md-dialog-actions>
+
+
+<!--<md-card>-->
+    <!--<md-card-header>-->
+        <!--<h2>{{ title }}</h2>-->
+    <!--</md-card-header>-->
+    <!--<md-card-content>-->
+        <!--<p>{{ message }}</p>-->
+    <!--</md-card-content>-->
+    <!--<md-card-actions>-->
+        <!--<md-toolbar>-->
+            <!--<div class="md-toolbar-tools">-->
+                <!--<span flex></span>-->
+                <!---->
+            <!--</div>-->
+        <!--</md-toolbar>-->
+    <!--</md-card-actions>-->
+<!--</md-card>-->

@@ -24,6 +24,8 @@ import {ListsResolverService} from "./resolvers/lists-resolver.service";
 import { ModalComponent } from './modal/modal.component';
 import { FocusDirective } from './directives/focus.directive';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {DialogService} from "./services/dialog.service";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCpLSW1tR2ZfOOxXCM1Lj5fp0HBsm6Bqos",
@@ -48,7 +50,8 @@ export const firebaseAuthConfig = {
         LoginComponent,
         ModalComponent,
         FocusDirective,
-        NotificationsComponent
+        NotificationsComponent,
+        ConfirmDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -66,7 +69,11 @@ export const firebaseAuthConfig = {
         ListsResolverService,
         CommonItemsService,
         NotificationService,
+        DialogService,
         UnderscoreService
+    ],
+    entryComponents: [
+        ConfirmDialogComponent
     ],
     bootstrap: [AppComponent]
 })

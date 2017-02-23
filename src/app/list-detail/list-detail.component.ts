@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { ListService} from '../services/list.service';
@@ -12,6 +12,7 @@ import {EventEmitter} from "@angular/common/src/facade/async";
 import {CommonItemsService} from "../services/common-items.service";
 import {NotificationService} from "../services/notification.service";
 import {MdSidenav} from "@angular/material";
+import {DialogService} from "../services/dialog.service";
 
 @Component({
     selector: 'app-list-detail',
@@ -47,7 +48,9 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         private listService: ListService,
         private commonItemsService: CommonItemsService,
         private router: Router,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private dialogService: DialogService,
+        private viewContainerRef: ViewContainerRef
     ) { }
 
     ngOnDestroy(): void {
@@ -73,7 +76,13 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     }
 
     confirmDelete(): void {
-        this.confirmModal.show();
+        this.dialogService
+            .confirm('Delete List', `Are you sure you want to delete ${this.list.name}?`, this.viewContainerRef)
+            .subscribe(confirm => {
+                if(confirm) {
+                    this.delete();
+                }
+            });
     }
 
     cancel(): void {
@@ -113,6 +122,7 @@ export class ListDetailComponent implements OnInit, OnDestroy {
 
     openSidebar(): void {
         this.newListItemName = 'New List Item';
+        this.newListName = this.list.name;
         this.sidenav.toggle();
         if(this.sidenav.opened) {
             setTimeout(() => {
