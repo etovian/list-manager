@@ -1,9 +1,17 @@
-<button *ngIf="currentUser" md-button [mdMenuTriggerFor]="menu">
-    {{ currentUser.firstName }}  {{ currentUser.lastName }}
-</button>
-<md-menu #menu="mdMenu">
-    <button (click)="logout()" md-menu-item>Logout</button>
-</md-menu>
+<md-toolbar>
+    <button *ngIf="currentUser" md-button [mdMenuTriggerFor]="menu">
+        {{ currentUser.firstName }}  {{ currentUser.lastName }}
+    </button>
+    <md-menu #menu="mdMenu">
+        <button (click)="logout()" md-menu-item>Logout</button>
+    </md-menu>
+    <span class="spacer"></span>
+    <a [routerLink]="['/welcome']">
+        <md-icon>home</md-icon>
+    </a>
+</md-toolbar>
+
+
 
 <router-outlet></router-outlet>
 

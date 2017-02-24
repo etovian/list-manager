@@ -1,12 +1,14 @@
-<h2>Welcome!</h2>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <ul class="list-group main-menu">
-                <li *ngFor="let item of menuItems" class="list-group-item big-text">
-                    <a [routerLink]="[item.url]">{{ item.text }}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<md-card>
+    <md-card-header>
+        <h2>Welcome!</h2>
+    </md-card-header>
+    <md-card-content>
+        <md-list>
+            <md-list-item
+                (click)="go(item)"
+                *ngFor="let item of menuItems" class="big-text pointer hover">
+                <span>{{ item.text }}</span>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>

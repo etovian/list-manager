@@ -7,23 +7,20 @@
             <md-card-content>
                 <form>
                     <md-input-container>
-                        <!--[formControl]="stateCtrl"-->
                         <input
-                            mdInput
-                            [mdAutocomplete]="auto"
                             [(ngModel)]="newListItemName"
+                            mdInput type="text"
                             [focus]="addModalFocusTriggeringEventEmitter"
-                            type="text"
-                            class="form-control"
-                            name="name"
-                            required="required">
+                            name="newListItemName">
+                        <!--<input-->
+                            <!--mdInput-->
+                            <!--[mdAutocomplete]="auto"-->
+                            <!--[formControl]="newItemControl"-->
+                            <!---->
+                            <!--type="text"-->
+                            <!--class="form-control"-->
+                            <!--required="required">-->
                     </md-input-container>
-
-                    <md-autocomplete #auto="mdAutocomplete">
-                        <md-option *ngFor="let state of filteredStates | async" [value]="state">
-                            {{ state }}
-                        </md-option>
-                    </md-autocomplete>
                 </form>
             </md-card-content>
             <md-card-actions>

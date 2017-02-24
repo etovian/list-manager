@@ -1,18 +1,18 @@
 import {Component, OnInit, ViewChild, OnDestroy, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-
 import { ListService} from '../services/list.service';
 
 import { List } from '../classes/list';
 import {ListItem} from "../classes/list-item";
 import {FirebaseObjectObservable, FirebaseListObservable} from "angularfire2";
 import {ModalComponent} from "../modal/modal.component";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
 import {EventEmitter} from "@angular/common/src/facade/async";
 import {CommonItemsService} from "../services/common-items.service";
 import {NotificationService} from "../services/notification.service";
 import {MdSidenav} from "@angular/material";
 import {DialogService} from "../services/dialog.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
     selector: 'app-list-detail',
@@ -24,9 +24,11 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     commonItems = [];
     commonItemsObservable: FirebaseListObservable<any>;
     commonItemsSubscription: Subscription;
+    filteredCommonItems: Observable<string[]>;
     list: List;
     listItems: ListItem[];
     listSubscription: Subscription;
+    newItemControl = new FormControl();
     newListName: string;
     newListItemName: string;
     observableList: FirebaseObjectObservable<List>;
@@ -73,6 +75,10 @@ export class ListDetailComponent implements OnInit, OnDestroy {
         this.commonItemsSubscription = this.commonItemsObservable.subscribe(commonItems => {
             this.commonItems = this.commonItemsService.getSortedItems(commonItems);
         });
+
+        this.filteredCommonItems = this.newItemControl.valueChanges
+            .startWith(null)
+            .map(val => val ? this.filterCommonItems(val) : this.commonItems.slice());
     }
 
     confirmDelete(): void {
@@ -96,6 +102,10 @@ export class ListDetailComponent implements OnInit, OnDestroy {
     changeListName(): void {
         this.list.name = this.newListName;
         this.save();
+    }
+
+    filterCommonItems(val: string): string[] {
+        return this.commonItems.filter(item => item.name.toLowerCase().includes(val.toLowerCase()));
     }
 
     removeCompletedItems(): void {

@@ -8,8 +8,8 @@ export class MainMenuItemService {
 
     getMenuItems(): MainMenuItem[] {
         return [
-            { text: 'Lists', url: '/lists' },
-            { text: 'Regular Items', url: '/regular-items' }
+            { text: 'Lists', path: 'lists' },
+            { text: 'Regular Items', path: 'regular-items' }
         ];
     }
 }

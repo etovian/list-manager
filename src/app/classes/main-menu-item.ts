@@ -1,4 +1,4 @@
 export class MainMenuItem {
     text: string;
-    url: string;
+    path: string;
 }

@@ -14,7 +14,7 @@ export class RegularItemsComponent implements OnInit, OnDestroy {
     items = [];
     itemsObservable: FirebaseListObservable<any>;
     itemsSubscription: Subscription;
-    newItemName: string;
+    newItemName = 'New Item';
 
     public newItemFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 

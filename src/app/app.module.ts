@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import {ReactiveFormsModule} from '@angular/forms';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { MainMenuItemService } from './services/main-menu-item.service';
@@ -59,6 +60,7 @@ export const firebaseAuthConfig = {
         HttpModule,
         AppRoutingModule,
         MaterialModule,
+        ReactiveFormsModule,
         AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
     ],
     providers: [
