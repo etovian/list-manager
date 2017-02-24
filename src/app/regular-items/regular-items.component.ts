@@ -3,6 +3,7 @@ import {CommonItemsService} from "../services/common-items.service";
 import {FirebaseListObservable} from "angularfire2";
 import {Subscription} from "rxjs";
 import {EventEmitter} from "@angular/common/src/facade/async";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
     selector: 'app-regular-items',
@@ -18,7 +19,7 @@ export class RegularItemsComponent implements OnInit, OnDestroy {
 
     public newItemFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
-    constructor(private commonItemsService: CommonItemsService) { }
+    constructor(private commonItemsService: CommonItemsService, private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.itemsObservable = this.commonItemsService.getAll()
@@ -33,12 +34,27 @@ export class RegularItemsComponent implements OnInit, OnDestroy {
     }
 
     addItem(): void {
-        this.commonItemsService.add(this.newItemName);
+        this.commonItemsService.add(this.newItemName).then(() => {
+            this.notificationService.addNotification({
+                title: 'Item Added',
+                text: `${this.newItemName} was added.`,
+                type: 'success',
+                pinned: false
+            });
+        });
         this.newItemFocusTriggeringEventEmitter.emit(true);
     }
 
     remove(item): void {
-        this.commonItemsService.delete(this.itemsObservable, item);
+        let itemName = item.name;
+        this.commonItemsService.delete(this.itemsObservable, item).then(() => {
+            this.notificationService.addNotification({
+                title: 'Item Deleted',
+                text: `${itemName} was deleted.`,
+                type: 'danger',
+                pinned: false
+            });
+        });
     }
 
 }

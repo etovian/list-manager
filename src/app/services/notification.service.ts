@@ -23,7 +23,7 @@ export class NotificationService {
         return this.notifications;
     }
 
-    private removeNotification(notification: Notification): void {
+    removeNotification(notification: Notification): void {
         this.notifications = this.underscoreService.get().without(this.notifications, notification);
     }
 

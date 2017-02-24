@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseListObservable} from "angularfire2";
+import Thenable = firebase.Thenable;
 
 @Injectable()
 export class CommonItemsService {
@@ -8,8 +9,8 @@ export class CommonItemsService {
 
     constructor(private af: AngularFire) { }
 
-    add(itemName: string): void {
-        this.af.database.list(this.url).push({
+    add(itemName: string): Thenable<any> {
+        return this.af.database.list(this.url).push({
             name: itemName
         });
     }
@@ -25,8 +26,8 @@ export class CommonItemsService {
         return sortedItems;
     }
 
-    delete(fromItems: FirebaseListObservable<any>, key): void {
-        fromItems.remove(key);
+    delete(fromItems: FirebaseListObservable<any>, key): Thenable<any> {
+        return fromItems.remove(key);
     }
 
 }

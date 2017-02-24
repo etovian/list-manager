@@ -27,4 +27,8 @@ export class NotificationsComponent implements OnInit {
         classes[`alert-${notification.type}`] = true;
         return classes;
     }
+
+    removeNotification(notification: Notification): void {
+        this.notificationService.removeNotification(notification);
+    }
 }
