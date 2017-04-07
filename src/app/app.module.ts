@@ -27,6 +27,7 @@ import { FocusDirective } from './directives/focus.directive';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {DialogService} from "./services/dialog.service";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCpLSW1tR2ZfOOxXCM1Lj5fp0HBsm6Bqos",
@@ -60,6 +61,7 @@ export const firebaseAuthConfig = {
         HttpModule,
         AppRoutingModule,
         MaterialModule,
+        FlexLayoutModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
     ],

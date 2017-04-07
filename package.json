@@ -9,13 +9,15 @@
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "browse": "ng serve -o"
   },
   "private": true,
   "dependencies": {
     "@angular/common": "^2.3.1",
     "@angular/compiler": "^2.3.1",
     "@angular/core": "^2.3.1",
+    "@angular/flex-layout": "^2.0.0-beta.7",
     "@angular/forms": "^2.3.1",
     "@angular/http": "^2.3.1",
     "@angular/material": "^2.0.0-beta.2",
@@ -32,11 +34,11 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.0",
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "@types/underscore": "^1.7.36",
-    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.0",
     "jasmine-core": "2.5.2",
